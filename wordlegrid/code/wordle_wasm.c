@@ -13,12 +13,12 @@ static u32 GlobalResultBufferMaxLength = Megabytes(4);
 static u32 GlobalResultBufferLength = 0;
 static u8 *GlobalResultBuffer = {0};
 
-void
-Init()
+void Init(void)
 {
     if(!GlobalAppInitialized)
     {
         GlobalDictionary = DictionaryCreate(128, large_word_list, ArrayCount(large_word_list));
+        GlobalResultBuffer = (u8 *)malloc(sizeof(*GlobalResultBuffer)*GlobalResultBufferMaxLength);
         ZeroSize_(GlobalResultBuffer, GlobalResultBufferMaxLength);
         GlobalResultBufferLength = 0;
         GlobalAppInitialized = true;
@@ -26,23 +26,31 @@ Init()
 }
 
 void
-Reset()
+Reset(void)
 {
     ZeroSize_(GlobalResultBuffer, GlobalResultBufferMaxLength);
     GlobalResultBufferLength = 0;
 }
 
-u8 *
-GetWords(u32 Width, u32 Height, char *Letters, u32 LettersLength)
+void
+FindWordsInGrid_(struct dictionary *Dictionary, struct adjacency_table *Table,
+                struct dictionary *FoundWordsDictionary)
 {
-    u32 GridWidth = 3;
-    u32 GridHeight = 3;
-    u8 GridString[] = "irnilagec";
-    struct adjacency_table Table = BuildAdjacencyTable(GridWidth, GridHeight, GridString, ArrayCount(GridString));
+    u8 StringBuilderBuffer[256] = {0};
+    for(u32 ListIndex = 0; ListIndex < Table->Width; ++ListIndex)
+    {
+        DepthFirstSearch(Table, StringBuilderBuffer, ArrayCount(StringBuilderBuffer), 0, ListIndex, Dictionary, FoundWordsDictionary);
+    }
+}
+
+void
+Solve(u32 Width, u32 Height, char *Letters, u32 LettersLength)
+{
+    struct adjacency_table Table = BuildAdjacencyTable(Width, Height, Letters, LettersLength);
 
     struct dictionary FoundWordsDictionary = DictionaryCreate(128, 0, 0);
 
-    FindWordsInGrid(&GlobalDictionary, &Table, &FoundWordsDictionary);
+    FindWordsInGrid_(&GlobalDictionary, &Table, &FoundWordsDictionary);
 
     GlobalResultBufferLength = 0;
     for(u32 Length = 3; Length < 7; ++Length)
@@ -53,5 +61,11 @@ GetWords(u32 Width, u32 Height, char *Letters, u32 LettersLength)
 
     DictionaryDestroy(&FoundWordsDictionary);
 
-    return(GlobalResultBuffer);
+    printf("%s\n", GlobalResultBuffer);
+}
+
+int main(void)
+{
+    Init();
+    return(0);
 }

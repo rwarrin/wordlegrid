@@ -2,7 +2,7 @@
 
 struct word_list_entry
 {
-    u8 *Word;
+    const char *Word;
     u8 Length;
 };
 

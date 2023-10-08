@@ -22,6 +22,7 @@ BuildAdjacencyTable(u32 Width, u32 Height, u8 *GridString, u32 GridStringLength)
 
         struct adjacency_node *Node = Result.Data + Index;
         Node->Visited = false;
+        // TODO(rick): Add "empty" cell character to set Valid to false
         Node->Valid = true;
         Node->Character = Character;
     }

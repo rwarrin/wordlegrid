@@ -199,6 +199,7 @@ DictionaryInOrderPrintBySize(struct tst_node *Root, u32 Length)
     DictionaryInOrderPrintBySize(Root->Right, Length);
 }
 
+#if 0
 static void
 TestTST(struct dictionary *Dictionary)
 {
@@ -236,3 +237,4 @@ TestTST(struct dictionary *Dictionary)
                WordsToFind[WordIndex]);
     }
 }
+#endif

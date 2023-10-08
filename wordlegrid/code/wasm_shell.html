@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Emscripten-Generated Code</title>
+    <style>
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      textarea.emscripten { font-family: monospace; width: 80%; }
+      div.emscripten { text-align: center; }
+      div.emscripten_border { border: 1px solid black; }
+
+      .spinner {
+        height: 50px;
+        width: 50px;
+        margin: 0px auto;
+        -webkit-animation: rotation .8s linear infinite;
+        -moz-animation: rotation .8s linear infinite;
+        -o-animation: rotation .8s linear infinite;
+        animation: rotation 0.8s linear infinite;
+        border-left: 10px solid rgb(0,150,240);
+        border-right: 10px solid rgb(0,150,240);
+        border-bottom: 10px solid rgb(0,150,240);
+        border-top: 10px solid rgb(100,0,200);
+        border-radius: 100%;
+        background-color: rgb(200,100,250);
+      }
+      @-webkit-keyframes rotation {
+        from {-webkit-transform: rotate(0deg);}
+        to {-webkit-transform: rotate(360deg);}
+      }
+      @-moz-keyframes rotation {
+        from {-moz-transform: rotate(0deg);}
+        to {-moz-transform: rotate(360deg);}
+      }
+      @-o-keyframes rotation {
+        from {-o-transform: rotate(0deg);}
+        to {-o-transform: rotate(360deg);}
+      }
+      @keyframes rotation {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(360deg);}
+      }
+      body {
+          background-color: #242424;
+      }
+      .wrapper {
+          width: 320px;
+          max-width: 320px;
+          min-width: 320px;
+          margin: 0 auto;
+      }
+      .letter-container {
+          
+      }
+      .letter-input {
+        width: 100%;
+        height: 74px;
+        border: 4px solid black;
+        border-radius: 4px;
+        text-align: center;
+        vertical-align: middle;
+        background-color: #666666;
+        font-size: 48px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .output-wrapper {
+        height: 220px;
+        background-color: pink;
+        display: flex;
+        flex-direction: column; 
+      }
+      #output {
+        width: 100%;
+        border: 4px solid #000000;
+        border-radius: 4px;
+        background-color: #666666;
+        font-size: 20px;
+        line-height: 26px;
+        font-family: monospace;
+        font-weight: 600;
+        box-sizing: border-box; /* fit parent width */
+        height: 100%;
+        text-transform: uppercase;
+      }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <figure style="overflow:visible;" id="spinner"><div class="spinner"></div><center style="margin-top:0.5em"><strong>emscripten</strong></center></figure>
+    <div class="emscripten" id="status">Downloading...</div>
+    <div class="emscripten">
+      <progress value="0" max="100" id="progress" hidden=1></progress>  
+    </div>
+
+    <div class="wrapper mt-6">
+        <div class="container mx-auto">
+            <div>
+                <h1 class="text-center text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Wordlegrid</h1>
+            </div>
+            <div class="grid gap-2 grid-cols-4 grid-rows-4 mt-6">
+                <div class="letter-container">
+                    <input type="text" name="input0" id="input0" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input1" id="input1" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input2" id="input2" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input3" id="input3" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input4" id="input4" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input5" id="input5" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input6" id="input6" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input7" id="input7" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input8" id="input8" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input9" id="input9" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input10" id="input10" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input11" id="input11" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input12" id="input12" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input13" id="input13" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input14" id="input14" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+                <div class="letter-container">
+                    <input type="text" name="input16" id="input16" class="letter-input" maxlength="1" placeholder=" " />
+                </div>
+            </div>
+            <div class="columns-1 mt-6 w-full text-white">
+                <button id="execute" type="button" class="w-full hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 text-white-900 dark:text-white-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">Find Words</button>
+            </div>
+            <div class="output-wrapper columns-1 mt-6">
+                <textarea class="emscripten p-2" id="output" disabled>
+                </textarea>
+            </div>
+        </div>
+    </div>
+
+
+    <script type='text/javascript'>
+      var statusElement = document.getElementById('status');
+      var progressElement = document.getElementById('progress');
+      var spinnerElement = document.getElementById('spinner');
+
+      var Module = {
+        print: (function() {
+          var element = document.getElementById('output');
+          if (element) element.value = ''; // clear browser cache
+          return function(text) {
+            if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+            // These replacements are necessary if you render to raw HTML
+            //text = text.replace(/&/g, "&amp;");
+            //text = text.replace(/</g, "&lt;");
+            //text = text.replace(/>/g, "&gt;");
+            //text = text.replace('\n', '<br>', 'g');
+            console.log(text);
+            if (element) {
+              element.value += text + "\n";
+              element.scrollTop = element.scrollHeight; // focus on bottom
+            }
+          };
+        })(),
+        setStatus: (text) => {
+          if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+          if (text === Module.setStatus.last.text) return;
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          var now = Date.now();
+          if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
+          Module.setStatus.last.time = now;
+          Module.setStatus.last.text = text;
+          if (m) {
+            text = m[1];
+            progressElement.value = parseInt(m[2])*100;
+            progressElement.max = parseInt(m[4])*100;
+            progressElement.hidden = false;
+            spinnerElement.hidden = false;
+          } else {
+            progressElement.value = null;
+            progressElement.max = null;
+            progressElement.hidden = true;
+            if (!text) spinnerElement.hidden = true;
+          }
+          statusElement.innerHTML = text;
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: (left) => {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+      window.onerror = () => {
+        Module.setStatus('Exception thrown, see JavaScript console');
+        spinnerElement.style.display = 'none';
+        Module.setStatus = (text) => {
+          if (text) console.error('[post-exception status] ' + text);
+        };
+      };
+
+
+        const OutputWrapper = document.querySelectorAll('.output-wrapper')[0];
+        const OutputBox = document.querySelector('#output');
+        const ExecuteButton = document.querySelector('#execute');
+        ExecuteButton.addEventListener("click", event => {
+
+            const WindowHeight = window.innerHeight;
+            const OutputTop = OutputWrapper.offsetTop;
+            const OutputHeight = (WindowHeight - OutputTop) - 25;
+            OutputWrapper.style.height = OutputHeight + "px";
+
+
+            const Letters = document.querySelectorAll('.letter-input');
+            let LetterString = "";
+            for(let LetterIndex = 0; LetterIndex < Letters.length; ++LetterIndex)
+            {
+                const Letter = (Letters[LetterIndex].value ? Letters[LetterIndex].value : "0");
+                LetterString += Letter;
+            }
+
+            if(_Solve !== undefined)
+            {
+                OutputBox.value = "";
+                const Width = 4;
+                const Height = 4;
+                const LettersPtr = allocate(intArrayFromString(LetterString), ALLOC_NORMAL);
+                _Solve(Width, Height, LettersPtr, LetterString.length);
+                _free(LettersPtr);
+                OutputBox.scrollTop = 0;
+            }
+
+            /**
+             * TODO(rick):
+             * - Input validation
+             * - Change wordlist
+             * - Customizable grid width/height
+             * - Service worker?
+             * - Cleanup this code
+             * - Word count display? 
+             * - Light/dark theming 
+             * - Performance
+             * 
+             * 
+             **/ 
+
+        });
+
+    </script>
+    {{{ SCRIPT }}}
+  </body>
+</html>
