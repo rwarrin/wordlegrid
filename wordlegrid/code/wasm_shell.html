@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Emscripten-Generated Code</title>
+    <title>Wordlegrid</title>
     <style>
       .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
       textarea.emscripten { font-family: monospace; width: 80%; }
@@ -84,6 +84,9 @@
         height: 100%;
         text-transform: uppercase;
       }
+      .options select {
+          width: 100%;
+      }
 
     </style>
     <meta charset="UTF-8">
@@ -102,9 +105,32 @@
             <div>
                 <h1 class="text-center text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Wordlegrid</h1>
             </div>
-            <div class="grid gap-2 grid-cols-4 grid-rows-4 mt-6">
+            <div class="columns-3 mt-6 options">
+                <div>
+                    <label for="width" class="text-white">Width</label>
+                    <select id="width" class="sizeselect">
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="height" class="text-white">Height</label>
+                    <select id="height" class="sizeselect">
+                        <option value="3" selected>3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="wordlist" class="text-white">List</label>
+                    <select id="wordlist">
+                        <option value="0" selected>A-Spell</option>
+                        <option value="1">Google 10k</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid gap-2 grid-cols-3 grid-rows-3 mt-6" id="lettergrid">
                 <div class="letter-container">
-                    <input type="text" name="input0" id="input0" class="letter-input" maxlength="1" placeholder=" " />
+                    <input type="text" class="letter-input" maxlength="1" placeholder=" " />
                 </div>
                 <div class="letter-container">
                     <input type="text" name="input1" id="input1" class="letter-input" maxlength="1" placeholder=" " />
@@ -129,27 +155,6 @@
                 </div>
                 <div class="letter-container">
                     <input type="text" name="input8" id="input8" class="letter-input" maxlength="1" placeholder=" " />
-                </div>
-                <div class="letter-container">
-                    <input type="text" name="input9" id="input9" class="letter-input" maxlength="1" placeholder=" " />
-                </div>
-                <div class="letter-container">
-                    <input type="text" name="input10" id="input10" class="letter-input" maxlength="1" placeholder=" " />
-                </div>
-                <div class="letter-container">
-                    <input type="text" name="input11" id="input11" class="letter-input" maxlength="1" placeholder=" " />
-                </div>
-                <div class="letter-container">
-                    <input type="text" name="input12" id="input12" class="letter-input" maxlength="1" placeholder=" " />
-                </div>
-                <div class="letter-container">
-                    <input type="text" name="input13" id="input13" class="letter-input" maxlength="1" placeholder=" " />
-                </div>
-                <div class="letter-container">
-                    <input type="text" name="input14" id="input14" class="letter-input" maxlength="1" placeholder=" " />
-                </div>
-                <div class="letter-container">
-                    <input type="text" name="input16" id="input16" class="letter-input" maxlength="1" placeholder=" " />
                 </div>
             </div>
             <div class="columns-1 mt-6 w-full text-white">
@@ -179,7 +184,7 @@
             //text = text.replace(/</g, "&lt;");
             //text = text.replace(/>/g, "&gt;");
             //text = text.replace('\n', '<br>', 'g');
-            console.log(text);
+            //console.log(text);
             if (element) {
               element.value += text + "\n";
               element.scrollTop = element.scrollHeight; // focus on bottom
@@ -222,11 +227,52 @@
           if (text) console.error('[post-exception status] ' + text);
         };
       };
-
-
         const OutputWrapper = document.querySelectorAll('.output-wrapper')[0];
         const OutputBox = document.querySelector('#output');
         const ExecuteButton = document.querySelector('#execute');
+        const SizeSelect = document.querySelectorAll('.sizeselect');
+        const WidthSelect = document.querySelector('#width');
+        const HeightSelect = document.querySelector('#height');
+        const LetterGrid = document.querySelector('#lettergrid');
+        const ListSelect = document.querySelector('#wordlist');
+
+        ListSelect.addEventListener("change", event => {
+            if(ListSelect.value)
+            {
+                const Value = parseInt(ListSelect.value);
+                _ChangeDictionary(Value);
+            }
+        });
+
+        const CreateGridCell = () => {
+            const cell = document.createElement("div");
+            cell.classList.add("letter-container");
+            cell.innerHTML = '<input type="text" class="letter-input" maxlength="1" placeholder=" " />'
+            return(cell);
+        }
+
+        for(let i = 0; i < SizeSelect.length; ++i)
+        {
+            const Select = SizeSelect[i];
+            Select.addEventListener("change", event => {
+                const NewWidth = parseInt(WidthSelect.value, 10);
+                const NewHeight = parseInt(HeightSelect.value, 10);
+                const NewCellCount = NewWidth*NewHeight;
+
+                LetterGrid.innerHTML = "";
+                LetterGrid.classList.value = "grid gap-2 grid-cols-3 grid-rows-3 mt-6";
+                LetterGrid.classList.add("grid-cols-" + NewWidth);
+                LetterGrid.classList.add("grid-rows-" + NewHeight);
+
+                for(let i = 0; i < NewCellCount; ++i)
+                {
+                    const Cell = CreateGridCell();
+                    LetterGrid.appendChild(Cell);
+                }
+            });
+        }
+
+
         ExecuteButton.addEventListener("click", event => {
 
             const WindowHeight = window.innerHeight;
@@ -242,12 +288,13 @@
                 const Letter = (Letters[LetterIndex].value ? Letters[LetterIndex].value : "0");
                 LetterString += Letter;
             }
+            LetterString = LetterString.toLowerCase();
 
             if(_Solve !== undefined)
             {
                 OutputBox.value = "";
-                const Width = 4;
-                const Height = 4;
+                const Width = parseInt(WidthSelect.value, 10);
+                const Height = parseInt(HeightSelect.value, 10);
                 const LettersPtr = allocate(intArrayFromString(LetterString), ALLOC_NORMAL);
                 _Solve(Width, Height, LettersPtr, LetterString.length);
                 _free(LettersPtr);
@@ -256,16 +303,8 @@
 
             /**
              * TODO(rick):
-             * - Input validation
-             * - Change wordlist
-             * - Customizable grid width/height
-             * - Service worker?
              * - Cleanup this code
-             * - Word count display? 
-             * - Light/dark theming 
-             * - Performance
-             * 
-             * 
+             * - Light/dark themeing 
              **/ 
 
         });

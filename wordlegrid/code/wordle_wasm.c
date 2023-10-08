@@ -64,6 +64,27 @@ Solve(u32 Width, u32 Height, char *Letters, u32 LettersLength)
     printf("%s\n", GlobalResultBuffer);
 }
 
+void
+ChangeDictionary(u32 ID)
+{
+    if((ID >= 0) && (ID < 2))
+    {
+        DictionaryDestroy(&GlobalDictionary);
+        switch(ID)
+        {
+            case 1:
+            {
+                GlobalDictionary = DictionaryCreate(128, google_word_list, ArrayCount(google_word_list));
+            } break;
+            case 0:
+            default:
+            {
+                GlobalDictionary = DictionaryCreate(128, large_word_list, ArrayCount(large_word_list));
+            } break;
+        }
+    }
+}
+
 int main(void)
 {
     Init();

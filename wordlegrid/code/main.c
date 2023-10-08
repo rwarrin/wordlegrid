@@ -21,7 +21,7 @@ int main(void)
 {
     u32 GridWidth = 3;
     u32 GridHeight = 3;
-    u8 GridString[] = "irnilagec";
+    u8 GridString[] = "r a ibcde";
     struct adjacency_table Table = BuildAdjacencyTable(GridWidth, GridHeight, GridString, ArrayCount(GridString));
 
     struct dictionary Dictionary = DictionaryCreate(128, large_word_list, ArrayCount(large_word_list));

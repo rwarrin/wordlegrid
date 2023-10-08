@@ -189,6 +189,7 @@ WriteLinesToCHeader(struct formatted_file *FormattedFile, char *FileName, char *
 
 int main(int ArgCount, char **Args)
 {
+    // TODO(rick): Make the object name a required parameter
     if(ArgCount == 6)
     {
         u32 MinLength = atoi(Args[4]);
