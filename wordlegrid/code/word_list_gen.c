@@ -189,11 +189,10 @@ WriteLinesToCHeader(struct formatted_file *FormattedFile, char *FileName, char *
 
 int main(int ArgCount, char **Args)
 {
-    // TODO(rick): Make the object name a required parameter
-    if(ArgCount == 6)
+    if(ArgCount == 7)
     {
-        u32 MinLength = atoi(Args[4]);
-        u32 MaxLength = atoi(Args[5]);
+        u32 MinLength = atoi(Args[5]);
+        u32 MaxLength = atoi(Args[6]);
         if(MaxLength == 0)
         {
             MinLength = 0;
@@ -201,19 +200,19 @@ int main(int ArgCount, char **Args)
         }
         struct formatted_file FormattedFile = GetFormattedFile(Args[1], MinLength, MaxLength);
 
-        u32 Seed = atoi(Args[3]);
+        u32 Seed = atoi(Args[4]);
         if(Seed)
         {
             FisherYatesShuffleLines(&FormattedFile, Seed);
         }
 
-        WriteLinesToCHeader(&FormattedFile, Args[2], "large_word_list");
+        WriteLinesToCHeader(&FormattedFile, Args[2], Args[3]);
 
         CloseFormattedFile(FormattedFile);
     }
     else
     {
-        printf("Usage: %s [input file] [output file] [seed] [min length] [max length]\n", Args[0]);
+        printf("Usage: %s [input file] [output file] [table name] [seed] [min length] [max length]\n", Args[0]);
         printf("\n");
         printf("When [seed] is 0 then no shuffle will be applied.\n");
         printf("If [max length] is 0 then length requirements are ignored.\n");

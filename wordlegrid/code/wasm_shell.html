@@ -105,19 +105,12 @@
             <div>
                 <h1 class="text-center text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Wordlegrid</h1>
             </div>
-            <div class="columns-3 mt-6 options">
+            <div class="columns-2 mt-6 options">
                 <div>
-                    <label for="width" class="text-white">Width</label>
-                    <select id="width" class="sizeselect">
-                        <option value="3" selected>3</option>
-                        <option value="4">4</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="height" class="text-white">Height</label>
-                    <select id="height" class="sizeselect">
-                        <option value="3" selected>3</option>
-                        <option value="4">4</option>
+                    <label for="size" class="text-white">Size</label>
+                    <select id="sizeselect" class="sizeselect">
+                        <option value="3x3" selected>3</option>
+                        <option value="4x4">4</option>
                     </select>
                 </div>
                 <div>
@@ -230,9 +223,7 @@
         const OutputWrapper = document.querySelectorAll('.output-wrapper')[0];
         const OutputBox = document.querySelector('#output');
         const ExecuteButton = document.querySelector('#execute');
-        const SizeSelect = document.querySelectorAll('.sizeselect');
-        const WidthSelect = document.querySelector('#width');
-        const HeightSelect = document.querySelector('#height');
+        const SizeSelect = document.querySelector('#sizeselect');
         const LetterGrid = document.querySelector('#lettergrid');
         const ListSelect = document.querySelector('#wordlist');
 
@@ -240,7 +231,10 @@
             if(ListSelect.value)
             {
                 const Value = parseInt(ListSelect.value);
-                _ChangeDictionary(Value);
+                if(_ChangeDictionary)
+                {
+                    _ChangeDictionary(Value);
+                }
             }
         });
 
@@ -251,35 +245,28 @@
             return(cell);
         }
 
-        for(let i = 0; i < SizeSelect.length; ++i)
-        {
-            const Select = SizeSelect[i];
-            Select.addEventListener("change", event => {
-                const NewWidth = parseInt(WidthSelect.value, 10);
-                const NewHeight = parseInt(HeightSelect.value, 10);
-                const NewCellCount = NewWidth*NewHeight;
+        SizeSelect.addEventListener("change", event => {
+            const NewWidth = parseInt(SizeSelect.value, 10);
+            const NewHeight = NewWidth;
+            const NewCellCount = NewWidth*NewHeight;
 
-                LetterGrid.innerHTML = "";
-                LetterGrid.classList.value = "grid gap-2 grid-cols-3 grid-rows-3 mt-6";
-                LetterGrid.classList.add("grid-cols-" + NewWidth);
-                LetterGrid.classList.add("grid-rows-" + NewHeight);
+            LetterGrid.innerHTML = "";
+            LetterGrid.classList.value = "grid gap-2 grid-cols-3 grid-rows-3 mt-6";
+            LetterGrid.classList.add("grid-cols-" + NewWidth);
+            LetterGrid.classList.add("grid-rows-" + NewHeight);
 
-                for(let i = 0; i < NewCellCount; ++i)
-                {
-                    const Cell = CreateGridCell();
-                    LetterGrid.appendChild(Cell);
-                }
-            });
-        }
-
+            for(let i = 0; i < NewCellCount; ++i)
+            {
+                const Cell = CreateGridCell();
+                LetterGrid.appendChild(Cell);
+            }
+        });
 
         ExecuteButton.addEventListener("click", event => {
-
             const WindowHeight = window.innerHeight;
             const OutputTop = OutputWrapper.offsetTop;
             const OutputHeight = (WindowHeight - OutputTop) - 25;
             OutputWrapper.style.height = OutputHeight + "px";
-
 
             const Letters = document.querySelectorAll('.letter-input');
             let LetterString = "";
@@ -290,23 +277,18 @@
             }
             LetterString = LetterString.toLowerCase();
 
-            if(_Solve !== undefined)
+            if((_Solve !== undefined) &&
+              (intArrayFromString !== undefined) &&
+              (_free !== undefined))
             {
                 OutputBox.value = "";
-                const Width = parseInt(WidthSelect.value, 10);
-                const Height = parseInt(HeightSelect.value, 10);
+                const Width = parseInt(SizeSelect.value, 10);
+                const Height = Width;
                 const LettersPtr = allocate(intArrayFromString(LetterString), ALLOC_NORMAL);
                 _Solve(Width, Height, LettersPtr, LetterString.length);
                 _free(LettersPtr);
                 OutputBox.scrollTop = 0;
             }
-
-            /**
-             * TODO(rick):
-             * - Cleanup this code
-             * - Light/dark themeing 
-             **/ 
-
         });
 
     </script>

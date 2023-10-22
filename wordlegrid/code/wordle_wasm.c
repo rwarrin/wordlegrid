@@ -53,7 +53,7 @@ Solve(u32 Width, u32 Height, char *Letters, u32 LettersLength)
     FindWordsInGrid_(&GlobalDictionary, &Table, &FoundWordsDictionary);
 
     GlobalResultBufferLength = 0;
-    for(u32 Length = 3; Length < 7; ++Length)
+    for(u32 Length = 3; Length <= 9; ++Length)
     {
         GlobalResultBufferLength += printf("%d LETTER WORDS:\n", Length);
         DictionaryInOrderPrintBySize(FoundWordsDictionary.Words, Length);
